@@ -13,6 +13,8 @@
     (filter-not  not-stop-word? (file->lines "stop-words.txt"))))
 (check-equal? (length STOP-WORDS) 429)
 
+;;;
+
 (define (expand-number-acronym str)
   (if (string-prefix? str "1.")
       (string-split str ".")
@@ -29,11 +31,16 @@
 
 (check-equal? (length MOBY-WORDS) (length R-MOBY-WORDS))
 
-
 (display-lines-to-file MOBY-WORDS "racket-words.txt" #:exists 'replace)
 
-;; Wishlist:
-;; (bagify lst)  (https://stackoverflow.com/questions/5740307/count-occurrence-of-element-in-a-list-in-scheme#5740464)
-;; (remv* v-lst lst)
-;; (bagify (remv* STOP-WORDS MOBY-WORDS))
+;;;
 
+(define (count-frequency lst)
+  (foldl (lambda (key ht)
+           (hash-update ht key add1 0))
+         #hash() lst))
+(check-equal? (count-frequency '()) '#hash())
+(check-equal? (count-frequency '("a" "a" "t")) '#hash(("a" . 2) ("t" . 1)))
+
+;; Wishlist:
+;; (count-frequency (remove* STOP-WORDS MOBY-WORDS))
