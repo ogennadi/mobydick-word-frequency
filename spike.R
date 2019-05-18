@@ -18,3 +18,4 @@ sa_moby_count <- sa_mobydick %>%
   count(word, sort=TRUE)
 
 sa_moby_count %>% top_n(100) %>% write.csv(file=stdout(), row.names = FALSE)
+lapply(sa_mobydick %>% select(word), write, "mobydick-words.txt")
