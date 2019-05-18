@@ -6,8 +6,6 @@ STOP_WORDS_FILE <- 'stop-words.txt'
 MOBYDICK_FILE <- 'mobydick.txt'
 JOIN_COLUMN <- 'word'
 
-data(stop_words)
-
 sa_stop_words <- read.table(STOP_WORDS_FILE, as.is=FALSE, col.names = c(JOIN_COLUMN), colClasses = 'character') %>% 
   tibble(word = .$word)
 
@@ -19,4 +17,4 @@ sa_moby_count <- sa_mobydick %>%
   anti_join(sa_stop_words, by = JOIN_COLUMN) %>%
   count(word, sort=TRUE)
 
-sa_moby_count %>% print(n=100)
+sa_moby_count %>% top_n(100) %>% write.csv(file=stdout(), row.names = FALSE)
