@@ -1,0 +1,5 @@
+What are the most common words used in Moby Dick?
+
+To find out, you'll need to have R installed. Then execute this command in the source directory
+
+    Rscript spike.R
