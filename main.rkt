@@ -53,3 +53,6 @@
     (take sorted-list 100)))
 
 (check-true (set=? RACKET-WORD-FREQ R-WORD-FREQ))
+
+(for ([assoc RACKET-WORD-FREQ])
+  (displayln assoc))
