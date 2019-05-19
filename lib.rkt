@@ -1,7 +1,7 @@
 #lang racket
-(provide RACKET-WORD-FREQ STOP-WORDS MOBY-WORDS count-frequency)
+(provide RACKET-WORD-FREQ stop-words MOBY-WORDS count-frequency)
 
-(define STOP-WORDS
+(define (stop-words)
   (let ([not-stop-word? (lambda (x) (or (equal? x "") (string-prefix? x "#")))])
     (filter-not  not-stop-word? (file->lines "stop-words.txt"))))
 
@@ -24,7 +24,7 @@
          #hash() lst))
 
 (define RACKET-WORD-FREQ
-  (let* ([freq-hash   (count-frequency (remove* STOP-WORDS MOBY-WORDS))]
+  (let* ([freq-hash   (count-frequency (remove* (stop-words) MOBY-WORDS))]
          [freq-list   (hash-map freq-hash list)]
          [sorted-list (sort freq-list > #:key last)])
     (take sorted-list 100)))

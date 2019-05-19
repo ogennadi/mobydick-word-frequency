@@ -3,7 +3,7 @@
          2htdp/batch-io
          rackunit)
 
-(check-equal? (length STOP-WORDS) 429)
+(check-equal? (length (stop-words)) 429)
 
 ;;;
 
