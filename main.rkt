@@ -2,11 +2,7 @@
 (require 2htdp/batch-io
          rackunit)
 
-(define WORD-FREQ (rest (read-csv-file "word-frequency.csv")))
 
-(define (calculate-word-freq)
-  WORD-FREQ)
-(check-equal? (calculate-word-freq) WORD-FREQ)
 
 (define STOP-WORDS
   (let ([not-stop-word? (lambda (x) (or (equal? x "") (string-prefix? x "#")))])
@@ -42,5 +38,18 @@
 (check-equal? (count-frequency '()) '#hash())
 (check-equal? (count-frequency '("a" "a" "t")) '#hash(("a" . 2) ("t" . 1)))
 
-;; Wishlist:
-;; (count-frequency (remove* STOP-WORDS MOBY-WORDS))
+;;;
+
+(define R-WORD-FREQ
+  (let* ([raw-data (rest (read-csv-file "word-frequency.csv"))]
+         [->string-and-number (lambda (lst)
+                                (list (first lst) (string->number (second lst))))])
+    (map ->string-and-number raw-data)))
+
+(define RACKET-WORD-FREQ
+  (let* ([freq-hash   (count-frequency (remove* STOP-WORDS MOBY-WORDS))]
+         [freq-list   (hash-map freq-hash list)]
+         [sorted-list (sort freq-list > #:key last)])
+    (take sorted-list 100)))
+
+(check-true (set=? RACKET-WORD-FREQ R-WORD-FREQ))

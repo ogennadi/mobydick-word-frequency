@@ -17,5 +17,5 @@ sa_moby_count <- sa_mobydick %>%
   anti_join(sa_stop_words, by = JOIN_COLUMN) %>%
   count(word, sort=TRUE)
 
-sa_moby_count %>% top_n(100) %>% write.csv(file=stdout(), row.names = FALSE)
+sa_moby_count %>% top_n(100) %>% write.csv(file="word-frequency.csv", row.names = FALSE)
 lapply(sa_mobydick %>% select(word), write, "mobydick-words.txt")
