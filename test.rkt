@@ -10,9 +10,9 @@
 (define R-MOBY-WORDS
   (file->lines "r-words.txt"))
 
-(check-equal? (length MOBY-WORDS) (length R-MOBY-WORDS))
+(check-equal? (length (moby-words)) (length R-MOBY-WORDS))
 
-(display-lines-to-file MOBY-WORDS "racket-words.txt" #:exists 'replace)
+(display-lines-to-file (moby-words) "racket-words.txt" #:exists 'replace)
 
 ;;;
 

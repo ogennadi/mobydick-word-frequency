@@ -1,5 +1,5 @@
 #lang racket
-(provide racket-word-freq stop-words MOBY-WORDS count-frequency)
+(provide racket-word-freq stop-words moby-words count-frequency)
 
 (define (stop-words)
   (let ([not-stop-word? (lambda (x) (or (equal? x "") (string-prefix? x "#")))])
@@ -10,7 +10,7 @@
       (string-split str ".")
       str))
 
-(define MOBY-WORDS
+(define (moby-words)
   (let* ([rough-tokens (string-split (file->string "mobydick.txt") #px"[-\uFEFF/:\\@“”!?;—\\s\\$\\*\\(\\)]+")]
          [trim  (lambda (str)  (string-trim str #px"[\\[‘’:&%.,\\]\\(\\)\\s]+"))]
          [lowercase-trimmed (map (compose string-downcase trim) rough-tokens)]
@@ -24,7 +24,7 @@
          #hash() lst))
 
 (define (racket-word-freq)
-  (let* ([freq-hash   (count-frequency (remove* (stop-words) MOBY-WORDS))]
+  (let* ([freq-hash   (count-frequency (remove* (stop-words) (moby-words)))]
          [freq-list   (hash-map freq-hash list)]
          [sorted-list (sort freq-list > #:key last)])
     (take sorted-list 100)))
