@@ -27,4 +27,4 @@
                                 (list (first lst) (string->number (second lst))))])
     (map ->string-and-number raw-data)))
 
-(check-true (set=? RACKET-WORD-FREQ R-WORD-FREQ))
+(check-true (set=? (racket-word-freq) R-WORD-FREQ))

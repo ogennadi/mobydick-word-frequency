@@ -1,5 +1,5 @@
 #lang racket
 (require "lib.rkt")
 
-(for ([assoc RACKET-WORD-FREQ])
+(for ([assoc (racket-word-freq)])
   (displayln assoc))
